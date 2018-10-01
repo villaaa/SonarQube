@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings ...>
+	<servers>
+    <repository>
+          <id>rajcanhelpu-visualstudio.com-new-feed</id>
+          <url>https://rajcanhelpu.pkgs.visualstudio.com/_packaging/new-feed/maven/v1</url>
+             <releases>
+             <enabled>true</enabled>
+             </releases>
+             <snapshots>
+             <enabled>true</enabled>
+             </snapshots>
+    </repository>
+    <server>
+        <id>mytomcat</id>
+        <username>$Tomcat8-appservice</username>
+        <password>4sX0yFd49lPkov1CBo9q5dQFjLgSanqaZQxvW36gFefoZD1dtXs9pTArscqY</password>
+    </server>
+    </servers>
+</settings>
