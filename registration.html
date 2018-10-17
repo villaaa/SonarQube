@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Account Registration</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" type="image/ico" href="Assets/icons/favicon.ico">
+    <link href="Assets/css/angular-material.min.css" rel="stylesheet" />
+    <link href="Assets/css/Site.css" rel="stylesheet" />
+    <link href="Assets/icons/icon.css" rel="stylesheet" />
+    <script src="Scripts/Angular/angular.min.js"></script>
+    <script src="Scripts/Angular/angular-material.min.js"></script>
+    <script src="Scripts/Angular/angular-animate.min.js"></script>
+    <script src="Scripts/Angular/angular-aria.min.js"></script>
+    <script src="Scripts/Angular/angular-messages.min.js"></script>
+    <script src="AuthScripts/angular-cookies.js"></script>
+    <script type="text/javascript" src="Scripts/jQuery/modernizr.custom.53451.js"></script>
+    <script src="Scripts/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="Scripts/jQuery/jquery.gallery.js"></script>
+    <script>
+        $.ajaxSetup({
+            async: false
+        });
+        var config = {};
+        $.getJSON("config.json", function (data) {
+            config = data;
+            $.ajaxSetup({
+                async: true
+            });
+        });
+    </script>
+    <style>
+        .bg-secondary {
+            background-color: #EEEEEE;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .my-card {
+            background-color: transparent;
+            color: #fff;
+        }
+
+        .cedia-bg {
+            /*background-image:url("../../Assets/images/cedia.jpg");
+             box-shadow: inset 0 0 0 1000px rgba(0,0,0,.2);*/
+            background-color: #333333;
+        }
+
+        .title1 {
+            color: #FFF;
+            font-size: 20px;
+        }
+
+        .bg-yellow {
+            background-color: #FFC201;
+            color: #FFF;
+        }
+
+        md-checkbox.md-default-theme.md-checked .md-ink-ripple, md-checkbox.md-checked .md-ink-ripple {
+            color: rgba(255, 194, 1, 1);
+            background-color: rgba(255, 194, 1, 1);
+        }
+
+        md-checkbox.md-default-theme.md-checked .md-icon, md-checkbox.md-checked .md-icon {
+            background-color: rgba(255, 194, 1, 1);
+        }
+
+        md-checkbox .md-label {
+            color: #1F1F1F;
+            font-size: 14px;
+            top: 2px;
+        }
+
+        md-list {
+            display: block !important;
+            padding: 8px 0px 0px 0px !important;
+        }
+
+        div.si-grid-item {
+            min-height: 40px !important;
+            padding: 20px 66px !important;
+            position: relative !important;
+        }
+
+        .input-wrapper md-input-container[md-no-float] label.md-required {
+            margin-bottom: 8px;
+        }
+
+        .account-list div.si-grid-item {
+            padding: 20px 20px !important;
+        }
+
+        .account-list .header {
+            padding: 15px 20px;
+            color: var(--cool-grey);
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+
+        .account-list div.si-grid-item > div > *:not(:last-child) {
+            padding-right: 0;
+        }
+
+        .account-selection-card {
+            box-shadow: 0px 1px 5px 1px rgba(0,0,0,.05);
+            border: none;
+        }
+
+        @media (min-width:426px) {
+            .account-selection-card {
+                min-width: 435px;
+                max-width: 450px !important;
+            }
+        }
+
+        @media (max-width:425px) {
+            .account-selection-card, .account-selection-container {
+                min-width: 100%;
+                max-width: 100% !important;
+            }
+        }
+    </style>
+
+
+    <!--<script src="Scripts/jquery-3.1.1.js"></script>-->
+    <!--<script src="modules/login/config.js"></script>-->
+    <script src="AuthScripts/dtoolb2c.js"></script>
+    <script src="AuthScripts/b2c.js"></script>
+    <script src="modules/login/controllers.js"></script>
+    <script src="AuthScripts/bootbox.min.js"></script>
+
+</head>
+<body ng-app="RegistrationApp" ng-cloak>
+    <div ng-app="headerApp" style="display:none;">
+        <div ng-include=" 'header.html' "></div>
+    </div>
+    <form name="registrationForm" ng-controller="registrationCtrl" ng-submit="registrationForm.$valid && AddAccount()" novalidate>
+        <div flex flex-xs="100" layout="row" layout-xs="column" layout-align="center center" style="padding-top: 80px;">
+            <div flex="50" flex-xs="100" layout="row" layout-align="center center" class="account-selection-container">
+                <md-card class="account-selection-card" flex="45" flex-xs="100">
+                    <md-card-title class="bg-primary1" style="padding:0;">
+                        <md-card-title-text style="display: block; text-align: center; padding-top: 40px;">
+                            <img style="max-width:100%;max-height:90px;" src="https://dtclouddevapp.azurewebsites.net/Assets/images/Logo_horz_small.png" />
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content class="padding-zero account-list" ng-show="!AddOrEdit" style="min-height:150px; max-height:460px; height:auto; overflow:auto;">
+                        <div ng-repeat="account in activeAccounts" ng-click="btnForward(account)">
+                            <div class="si-grid-item">
+                                <div layout="row" flex="100">
+                                    <div class="user-img" flex="25" ng-if="!account.logoUrl" style="min-width: 40px;background-color: gray;color: white;">{{setAvatarText(account.name)}}</div>
+                                    <div class="user-img" style="min-width: 40px" flex="25" ng-if="account.logoUrl">
+                                        <div class="img" ng-resource-image="{{account.logoUrl}}" title="User"></div>
+                                    </div>
+                                    <div style="margin-left: 10px">
+                                        <h3 class="margin-zero">{{account.name}}</h3>
+                                    </div>
+                                    <div flex></div>
+                                    <md-icon class="md-secondary icon-action icon-small">forward</md-icon>
+                                </div>
+                            </div>
+                            <md-divider ng-if="$index < activeAccounts.length-1 || pendingAccounts.length"></md-divider>
+                        </div>
+                        <!--<div class="header" ng-if="pendingAccounts.length > 0">Pending Invitaions</div>
+                        <md-divider ng-if="pendingAccounts.length > 0"></md-divider>-->
+                        <div ng-repeat="account in pendingAccounts">
+                            <div class="si-grid-item">
+                                <div layout="row" flex="100">
+                                    <div class="user-img" flex="25" ng-if="!account.logoUrl" style="min-width: 40px;background-color: gray;color: white;">{{setAvatarText(account.name)}}</div>
+                                    <div class="user-img" style="min-width: 40px" flex="25" ng-if="account.logoUrl">
+                                        <div class="img" ng-resource-image="{{account.logoUrl}}" title="User"></div>
+                                    </div>
+
+                                    <div style="margin-left: 10px;">
+                                        <h3 class="margin-zero">{{account.name}}</h3>
+                                        <span class="span-cat">Invited by {{account.inviter}}</span>
+                                    </div>
+                                    <div flex></div>
+                                    <md-button md-no-ink class="standard" style="padding-right: 0px;min-width: 70px;max-width: 70px;padding: 0;" ng-click="declineAccountInvitations(account)">Decline</md-button>
+                                    <md-button md-no-ink class="primary" style="margin:6px 5px;padding-right: 0px;min-width: 70px;max-width: 70px;padding: 0;" ng-click="acceptAccountInvitation(account)">Accept</md-button>
+                                </div>
+                            </div>
+                            <md-divider ng-if="$index < pendingAccounts.length-1"></md-divider>
+                        </div>
+                    </md-card-content>
+                    <md-card-content ng-show="AddOrEdit">
+                        <div layout="row" layout-wrap>
+                            <div layout="column" flex="100" class="input-wrapper text required">
+                                <md-input-container md-no-float>
+                                    <label>Account Name</label>
+                                    <input placeholder="Account Name" type="text" name="AccountName" id="AccountName" ng-model="Account.AccountName" autocomplete="off" required />
+                                    <div ng-messages="registrationForm.AccountName.$error">
+                                        <div ng-message="required">Account Name is required</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" flex="100" class="input-wrapper text required">
+                                <md-input-container md-no-float>
+                                    <label>Phone</label>
+                                    <input placeholder="Phone" type="text" name="Phone" id="Phone" ng-model="Account.Phone" autocomplete="off" required />
+                                    <div ng-messages="registrationForm.phone.$error">
+                                        <div ng-message="required">Phone is required</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="column" flex="100" class="input-wrapper text">
+                                <md-input-container md-no-float>
+                                    <label>Address</label>
+                                    <input placeholder="Address" type="text" name="Address" id="Address" ng-model="Account.StreetAddress1" autocomplete="off" />
+                                </md-input-container>
+                            </div>
+                            <div layout="column" flex="100" class="input-wrapper text">
+                                <md-input-container md-no-float>
+                                    <label>City</label>
+                                    <input placeholder="City" type="text" name="City" id="City" ng-model="Account.City" autocomplete="off" />
+                                </md-input-container>
+                            </div>
+                            <div layout="column" flex="100" class="input-wrapper text">
+                                <md-input-container md-no-float>
+                                    <label>State</label>
+                                    <input placeholder="State" type="text" name="State" id="State" ng-model="Account.State" autocomplete="off" />
+                                </md-input-container>
+                            </div>
+                            <div layout="column" flex="100" class="input-wrapper text required">
+                                <md-input-container md-no-float>
+                                    <label>Country</label>
+                                    <input placeholder="Country" type="text" name="Country" id="Country" ng-model="Account.Country" autocomplete="off" required />
+                                    <div ng-messages="registrationForm.Country.$error">
+                                        <div ng-message="required">Country is required</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </md-card-content>
+                    <md-card-actions>
+                        <div layout="row" layout-align="end center" flex="100" ng-show="AddOrEdit" class="md-padding" style="padding-top:0;">
+                            <img ng-if="dataLoading" style="width: 20px;height: 20px;" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                            <md-button md-no-ink class="standard" ng-click="btnAddOrEdit(false)">Back</md-button>
+                            <md-button md-no-ink style="margin-right:8px;" ng-disabled="dataLoading" class="primary" ng-click="registrationForm.$valid && AddAccount(Account)">Create Account</md-button>
+                        </div>
+                        <!--<div layout="row" layout-align="end center" ng-show="!AddOrEdit" class="md-padding">
+                            <md-button ng-click="btnAddOrEdit(true)" class="md-primary md-raised" style="padding: 0 15px;">
+                                <ng-md-icon icon="add" style="margin-right:10px;">+</ng-md-icon>New Account
+                            </md-button>
+                        </div>-->
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

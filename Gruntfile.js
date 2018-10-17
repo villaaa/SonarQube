@@ -1,0 +1,116 @@
+﻿/*
+This file in the main entry point for defining grunt tasks and using grunt plugins.
+Click here to learn more. https://go.microsoft.com/fwlink/?LinkID=513275&clcid=0x409
+*/
+module.exports = function (grunt) {
+
+
+    grunt.initConfig({
+        clean: {
+            src: ['Scripts/concatenated/*', 'Scripts/minified/*', 'Assets/minified/*']
+        },
+        concat:
+            {
+                //options: {
+                //    sourceMap: true
+                //},
+                controllers1:
+                    {
+                        src: ["Scripts/Controllers/Shared/accountRegistrationController.js", "Scripts/Controllers/Dashboard/dashboardController.js", "Scripts/Controllers/Dashboard/SalesManagerController.js", "Scripts/Controllers/Dashboard/businessOwnerController.js", "Scripts/Controllers/Dashboard/dashboardManagerController.js", "Scripts/Controllers/Dashboard/dashboardFiltersController.js", "Scripts/Controllers/People/peopleController.js", "Scripts/Controllers/People/Accounts/addAddressController.js", "Scripts/Controllers/People/assignAddressCountryController.js", "Scripts/Controllers/People/assignPartnerController.js", "Scripts/Controllers/People/Accounts/accountsController.js", "Scripts/Controllers/People/Accounts/createAccountController.js", "Scripts/Controllers/People/Accounts/quickAddController.js", "Scripts/Controllers/People/Accounts/accountPreviewController.js", "Scripts/Controllers/People/Accounts/accountAddressesController.js", "Scripts/Controllers/People/Accounts/assignAccountController.js", "Scripts/Controllers/People/Settings/accountTypesController.js", "Scripts/Controllers/People/Settings/editAccountTypeController.js", "Scripts/Controllers/People/Settings/contactDepartmentsController.js", "Scripts/Controllers/People/Settings/editContactDepartmentController.js", "Scripts/Controllers/People/Contacts/contactsController.js", "Scripts/Controllers/People/Contacts/createContactController.js", "Scripts/Controllers/People/Contacts/assignContactController.js", "Scripts/Controllers/People/Settings/assignAccountTypeController.js", "Scripts/Controllers/People/Settings/assignContactDepartmentController.js", "Scripts/Controllers/People/Settings/assignAccountTypeController.js", "Scripts/Controllers/People/Accounts/accountSummaryController.js", "Scripts/Controllers/People/Accounts/addressesController.js", "Scripts/Controllers/People/Accounts/overviewAccountController.js", "Scripts/Controllers/People/Accounts/accountController.js", "Scripts/Controllers/People/Accounts/accountActivityController.js", "Scripts/Controllers/People/Contacts/addContactController.js", "Scripts/Controllers/ProjectTypes/projectTypeBaseController.js", "Scripts/Controllers/ProjectTypes/projectTypesController.js", "Scripts/Controllers/ProjectTypes/quickAddProjectTypeController.js", "Scripts/Controllers/ProjectTypes/editProjectTypeController.js", "Scripts/Controllers/ProjectTypes/assignProjectTypesController.js", "Scripts/Controllers/ProjectTypes/ProjectTypeGroups/projectTypeGroupsController.js", "Scripts/Controllers/ProjectTypes/ProjectTypeGroups/assignProjectTypeGroupsController.js", "Scripts/Controllers/ProjectTypes/ProjectTypeGroups/editProjectTypeGroupController.js", "Scripts/Controllers/ProjectTypes/ProjectTypeGroups/assignProjectTypeGroupsController2.js", "Scripts/Controllers/Catalog/LaborTypes/editProjectTypeLaborItemsController.js", "Scripts/Controllers/Catalog/addProjectTypeItemsController.js", "Scripts/Controllers/Catalog/editProjectTypeItemController.js", "Scripts/Controllers/ProjectTypes/createProjectTypeController.js", "Scripts/Controllers/Opportunities/transactionsController.js", "Scripts/Controllers/Opportunities/opportunitiesController.js", "Scripts/Controllers/Opportunities/opportunityPreviewController.js", "Scripts/Controllers/Opportunities/Overview/overviewOpportunityController.js", "Scripts/Controllers/Opportunities/opportunitySummaryController.js", "Scripts/Controllers/Opportunities/createOpportunityController.js", "Scripts/Controllers/Opportunities/opportunitySettings.controller.js", "Scripts/Controllers/Opportunities/addOpportunitySettingAddressController.js", "Scripts/Controllers/Opportunities/People/opportunityPeopleController.js", "Scripts/Controllers/Opportunities/People/opportunityAddPeopleController.js", "Scripts/Controllers/Opportunities/Files/opportunityFoldersController.js", "Scripts/Controllers/Opportunities/Files/editOpportunityFolderController.js", "Scripts/Controllers/Opportunities/conversationController.js", "Scripts/Controllers/Opportunities/editOpportunityLostController.js", "Scripts/Controllers/OpportunityStages/opportunityStagesController.js", "Scripts/Controllers/OpportunityStages/editOpportunityStageController.js", "Scripts/Controllers/Projects/projectsIndexController.js", "Scripts/Controllers/Projects/projectsController.js", "Scripts/Controllers/Projects/projectPreviewController.js", "Scripts/Controllers/Projects/Project/projectController.js", "Scripts/Controllers/Projects/Project/projectSummaryController.js", "Scripts/Controllers/Projects/Project/projectOverviewController.js", "Scripts/Controllers/Projects/Project/addProjectPeopleController.js", "Scripts/Controllers/Projects/Project/projectPeopleController.js", "Scripts/Controllers/Projects/Project/Files/editProjectFolderController.js", "Scripts/Controllers/Projects/Project/Files/projectFoldersController.js", "Scripts/Controllers/Projects/Project/projectSettingsController.js", "Scripts/Controllers/Projects/Project/AmazonBusiness/amazonBusinessController.js", "Scripts/Controllers/Projects/Project/AmazonBusiness/Order/amazonBusinessNewOrderController.js", "Scripts/Controllers/Projects/Project/AmazonBusiness/Order/amazonBusinessOrderDetailController.js", "Scripts/Controllers/Projects/Project/AmazonBusiness/Order/amazonBusinessCheckoutController.js", "Scripts/Controllers/Catalog/catalogController.js", "Scripts/Controllers/Catalog/addItemfromLibraryController.js", "Scripts/Controllers/Catalog/addItemsController.js", "Scripts/Controllers/Catalog/addLaborController.js", "Scripts/Controllers/Catalog/addLaborController1.js", "Scripts/Controllers/Catalog/addAccessoriesController.js", "Scripts/Controllers/Catalog/editAccessoriesController.js", "Scripts/Controllers/Catalog/assignIncludeOptionsController.js", "Scripts/Controllers/Catalog/imagePreviewController.js", "Scripts/Controllers/Catalog/Products/productsController.js", "Scripts/Controllers/Catalog/Products/createProductController.js", "Scripts/Controllers/Catalog/Products/editProductController.js", "Scripts/Controllers/Catalog/Products/productPreviewController.js", "Scripts/Controllers/Catalog/Products/productDetailController.js", "Scripts/Controllers/Catalog/Products/productAccessoriesController.js", "Scripts/Controllers/Catalog/Products/productOverviewController.js", "Scripts/Controllers/Catalog/assignItemsController.js", "Scripts/Controllers/Catalog/Services/servicesController.js", "Scripts/Controllers/Catalog/Services/createServiceController.js", "Scripts/Controllers/Catalog/Services/editServiceController.js", "Scripts/Controllers/Catalog/Services/servicePreviewController.js", "Scripts/Controllers/Catalog/Services/serviceDetailController.js", "Scripts/Controllers/Catalog/Services/serviceOverviewController.js", "Scripts/Controllers/Catalog/Allowances/allowancesController.js", "Scripts/Controllers/Catalog/Allowances/createAllowanceController.js", "Scripts/Controllers/Catalog/Allowances/editAllowanceController.js", "Scripts/Controllers/Catalog/Allowances/allowancePreviewController.js", "Scripts/Controllers/Catalog/Allowances/allowanceDetailController.js", "Scripts/Controllers/Catalog/Allowances/allowanceAccessoriesController.js", "Scripts/Controllers/Catalog/Allowances/computedPriceController.js", "Scripts/Controllers/Catalog/Allowances/allowanceOverviewController.js", "Scripts/Controllers/Catalog/LaborTypes/laborTypesController.js", "Scripts/Controllers/Catalog/LaborTypes/editLaborTypeController.js", "Scripts/Controllers/Catalog/LaborTypes/addLaborItemsController.js", "Scripts/Controllers/Catalog/LaborTypes/addLaborItemsController.js", "Scripts/Controllers/Catalog/LaborTypes/assignLaborTypesController.js", "Scripts/Controllers/Catalog/LaborTypes/assignLaborTypesController1.js", "Scripts/Controllers/Catalog/LaborTypes/fulfillmentLocationSelectorController.js", "Scripts/Controllers/Catalog/Settings/FulfillmentLocations/fulfillmentLocationsController.js", "Scripts/Controllers/Catalog/Settings/FulfillmentLocations/editFulfillmentLocationController.js", "Scripts/Controllers/Catalog/Settings/FulfillmentLocations/assignFulfillmentLocationsController.js", "Scripts/Controllers/Catalog/addItemsController2.js", "Scripts/Controllers/Quotes/qutoeAppBarController.js", "Scripts/Controllers/Quotes/quotesController.js", "Scripts/Controllers/Quotes/quoteController.js", "Scripts/Controllers/Quotes/quoteSummaryController.js", "Scripts/Controllers/Quotes/createQuoteController.js", "Scripts/Controllers/Quotes/acceptQuoteController.js", "Scripts/Controllers/Quotes/Design/Items/createQuoteItemController.js", "Scripts/Controllers/Quotes/Design/Items/itemPreviewController.js", "Scripts/Controllers/Quotes/Design/Items/quoteItemsController.js", "Scripts/Controllers/Quotes/Design/Items/quoteItemAccessoriesController.js", "Scripts/Controllers/Quotes/Design/Items/editQuoteItemAccessoriesController.js", "Scripts/Controllers/Quotes/Design/Items/computeAllowancePriceController.js", "Scripts/Controllers/Quotes/Design/Items/addAccessoriesController.js", "Scripts/Controllers/Quotes/Design/Items/quoteItemNotesController.js", "Scripts/Controllers/Quotes/Design/Filters/Systems/quoteSystemsController.js", "Scripts/Controllers/Quotes/Design/Filters/Systems/editQuoteSystemController.js", "Scripts/Controllers/Quotes/Design/Filters/Systems/assignQuoteSystemController.js", "Scripts/Controllers/Quotes/Design/Filters/Locations/locationsController.js", "Scripts/Controllers/Quotes/Design/Filters/Locations/editLocationController.js", "Scripts/Controllers/Quotes/Design/Filters/Locations/assignLocationController.js"],
+                        dest: 'Scripts/concatenated/controllers1-concat.js'
+                    },
+                controllers2:
+                    {
+                        src: ["Scripts/Controllers/Quotes/Design/Items/copyToController.js", "Scripts/Controllers/Quotes/Files/quoteFoldersController.js", "Scripts/Controllers/Quotes/Files/editQuoteFolderController.js", "Scripts/Controllers/Quotes/Files/quoteFilesController.js", "Scripts/Controllers/Quotes/Pricing/quotePricingController.js", "Scripts/Controllers/Quotes/Pricing/Tax/addQuoteTaxController.js", "Scripts/Controllers/Quotes/Pricing/Tax/assignQuoteTaxController.js", "Scripts/Controllers/Quotes/Pricing/Tax/createQuoteTaxController.js", "Scripts/Controllers/Quotes/Pricing/Tax/editQuoteTaxController.js", "Scripts/Controllers/Quotes/Pricing/Tax/editQuoteTaxGroupController.js", "Scripts/Controllers/Quotes/Pricing/PaymentTerms/assignPaymentTemplatesController.js", "Scripts/Controllers/Quotes/Pricing/PaymentTerms/editQuotePaymentTermsController.js", "Scripts/Controllers/Quotes/Pricing/PaymentTerms/savePaymentTermsAsTemplateController.js", "Scripts/Controllers/Quotes/Settings/quoteSettings2Controller.js", "Scripts/Controllers/Quotes/Settings/editLaborTypeController.js", "Scripts/Controllers/QuoteStages/quoteStagesController.js", "Scripts/Controllers/QuoteStages/editQuoteStateController.js", "Scripts/Controllers/ProposalTemplates/ProposalTemplateBaseController.js", "Scripts/Controllers/ProposalTemplates/proposalTemplatesController.js", "Scripts/Controllers/ProposalTemplates/proposalTemplatesEditController.js", "Scripts/Controllers/ProposalTemplates/proposalPreviewController.js", "Scripts/Controllers/ProposalTemplates/proposalTemplatesPreviewController.js", "Scripts/Controllers/Quotes/ProposalAnalyticsController.js", "Scripts/Controllers/Quotes/ShareProposalController.js", "Scripts/Controllers/PaymentTerms/paymentTermsController.js", "Scripts/Controllers/PaymentTerms/editPaymentTermController.js", "Scripts/Controllers/Brands/brandsController.js", "Scripts/Controllers/Brands/editBrandController.js", "Scripts/Controllers/Brands/editBrandPriceRuleController.js", "Scripts/Controllers/Brands/assignBrandController.js", "Scripts/Controllers/Suppliers/suppliersController.js", "Scripts/Controllers/Suppliers/createSupplierController.js", "Scripts/Controllers/Suppliers/editSupplierController.js", "Scripts/Controllers/Suppliers/supplierContactController.js", "Scripts/Controllers/Reasons/reasonsController.js", "Scripts/Controllers/Reasons/editReasonController.js", "Scripts/Controllers/Reasons/assignReasonController.js", "Scripts/Controllers/ItemCategories/itemCategoriesController.js", "Scripts/Controllers/ItemCategories/itemCategoriesController1.js", "Scripts/Controllers/ItemCategories/editItemCategoryController.js", "Scripts/Controllers/ItemCategories/editCategoryController.js", "Scripts/Controllers/ItemCategories/categoryPickerController.js", "Scripts/Controllers/ItemCategories/categorySelectorController.js", "Scripts/Controllers/ItemCategories/editItemController.js", "Scripts/Controllers/ItemCategories/categoryDetailController.js", "Scripts/Controllers/ItemCategories/categoryDetailController1.js", "Scripts/Controllers/ItemCategories/createItemCategoriesController.js", "Scripts/Controllers/Reports/reportController.js", "Scripts/Controllers/Reports/mixAndMarginController.js", "Scripts/Controllers/Reports/opportunitiesReportsController.js", "Scripts/Controllers/Taxes/taxesController.js", "Scripts/Controllers/Taxes/createTaxController.js", "Scripts/Controllers/Taxes/addTaxController.js", "Scripts/Controllers/Taxes/editTaxController.js", "Scripts/Controllers/Taxes/assignTaxController.js", "Scripts/Controllers/Taxes/editTaxGroupController.js", "Scripts/Controllers/Taxes/taxSettingsController.js", "Scripts/Controllers/Phases/phasesController.js", "Scripts/Controllers/Phases/editPhaseController.js", "Scripts/Controllers/Phases/assignPhaseController.js", "Scripts/Controllers/Systems/systemsController.js", "Scripts/Controllers/Systems/editSystemController.js", "Scripts/Controllers/Systems/assignSystemController.js", "Scripts/Controllers/UnitOfMeasures/unitOfMeasureController.js", "Scripts/Controllers/UnitOfMeasures/createUnitOfMeasureController.js", "Scripts/Controllers/UnitOfMeasures/editUnitOfMeasureController.js", "Scripts/Controllers/UnitOfMeasures/assignUnitOfMeasureController.js", "Scripts/Controllers/Users/userController.js", "Scripts/Controllers/Users/editUserController.js", "Scripts/Controllers/Users/assignUserController.js", "Scripts/Controllers/UserGroups/userGroupsController.js", "Scripts/Controllers/UserGroups/editUserGroupController.js", "Scripts/Controllers/CustomFields/customFieldsController.js", "Scripts/Controllers/CustomFields/editCustomFieldController.js", "Scripts/Controllers/CustomFields/_customFieldsController.js", "Scripts/Controllers/CustomFields/customFieldsViewController.js", "Scripts/Controllers/Lengths/lengthsController.js", "Scripts/Controllers/Lengths/lengthTypeSelectorController.js", "Scripts/Controllers/Lengths/editLengthsController.js", "Scripts/Controllers/Lengths/editLengthRuleController.js", "Scripts/Controllers/Lengths/assignLengthsController.js", "Scripts/Controllers/Shared/feedbackController.js", "Scripts/Controllers/Shared/assignCountryController.js", "Scripts/Controllers/Shared/globalAddOptionsController.js", "Scripts/Controllers/Shared/googleAddressController.js", "Scripts/Controllers/Shared/assignCalculatedPriceTypesController.js", "Scripts/Controllers/Shared/assignCalculatedCostTypesController.js", "Scripts/Controllers/Opportunities/taskController.js", "Scripts/Controllers/Quotes/quoteConversationController.js", "Scripts/Controllers/Quotes/quoteTaskController.js", "Scripts/Controllers/Quotes/createTaskController.js", "Scripts/Controllers/Quotes/quoteWarningController.js", "Scripts/Controllers/Shared/assignSpecificationController.js", "Scripts/Controllers/Company/companySettingsController.js", "Scripts/Controllers/NumberSettings/numberSettingsController.js", "Scripts/Controllers/Setup/setupController.js", "Scripts/Controllers/Setup/inviteUserController.js", "Scripts/Controllers/Shared/myProfileController.js", "Scripts/Controllers/Integrations/QuickBooks/quickBooksSettingsController.js", "Scripts/Controllers/Integrations/QuickBooks/Items/exportItemsController.js", "Scripts/Controllers/Integrations/QuickBooks/Items/createItemsController.js", "Scripts/Controllers/Integrations/QuickBooks/Items/itemDetailController.js", "Scripts/Controllers/Integrations/QuickBooks/Items/mapItemController.js", "Scripts/Controllers/Integrations/QuickBooks/Items/assignQbAccountController.js", "Scripts/Controllers/Integrations/QuickBooks/Accounts/errorAccountsController.js", "Scripts/Controllers/Integrations/QuickBooks/Projects/CreateEstimateController.js", "Scripts/Controllers/Integrations/QuickBooks/Items/exportItemSettingsController.js", "Scripts/Controllers/Integrations/QuickBooks/Settings/integrationSettingsController.js", "Scripts/Controllers/Integrations/QuickBooks/Accounts/accountIntegrationOptionsController.js", "Scripts/Controllers/Integrations/QuickBooks/Accounts/linkAccountController.js", "Scripts/Controllers/Integrations/integrationsController.js", "Scripts/Controllers/Integrations/itemIntegrationsController.js", "Scripts/Controllers/Integrations/Amazon/amazonProductDetailController.js", "Scripts/Controllers/Integrations/Amazon/amazonProductsController.js", "Scripts/Controllers/Integrations/Amazon/amazonSettingsController.js", "Scripts/Controllers/Integrations/Amazon/amazonSignUpcontroller.js", "Scripts/Controllers/Integrations/popupWarningController.js", "Scripts/Controllers/Notifications/notificationsController.js", "Scripts/Controllers/Notifications/configurationController.js", "Scripts/Controllers/ManagementTask/managementTaskController.js", "Scripts/Controllers/ManagementTask/managementTaskDetailController.js", "Scripts/Controllers/ProjectStages/projectStagesController.js", "Scripts/Controllers/Tasks/tasksController.js", "Scripts/Controllers/ProjectStages/editProjectStageController.js", "Scripts/Controllers/Company/companyProfileController1.js", "Scripts/Controllers/DataMigration/dataMigrationController.js", "Scripts/Controllers/Tasks/assignUserController.js", "Scripts/Controllers/Catalog/Packages/packagesController.js", "Scripts/Controllers/Catalog/Packages/editPackageController.js", "Scripts/Controllers/Catalog/LaborTypes/addFulfillmentLocationController.js", "Scripts/Controllers/Catalog/Common/itemImagescontroller.js", "Scripts/Controllers/Catalog/Packages/editPackageItemController.js", "Scripts/Controllers/Systems/createSystemController.js", "Scripts/Controllers/QualityLevels/editQualityLevelsController.js", "Scripts/Controllers/Catalog/Import/importController.js", "Scripts/Controllers/PlanView/planViewController.js", "Scripts/Controllers/PlanView/createPlanViewController.js", "Scripts/Controllers/Subscriptions/activateSubscriptionController.js", "Scripts/Controllers/Subscriptions/saCustomerController.js", "Scripts/Controllers/Subscriptions/subscriptionExpiredController.js", "Scripts/Controllers/Subscriptions/purchaseSubscriptionController.js", "Scripts/Controllers/Subscriptions/subscriptionController.js", "Scripts/Controllers/Tasks/createTaskController.js", "Scripts/Controllers/Notes/createNotesController.js", "Scripts/Controllers/Company/generateTokenController.js", "Scripts/Controllers/Catalog/Import/assignItemController.js", "Scripts/Controllers/AuthTokens/authTokensController.js", "Scripts/Controllers/Opportunities/assignOpportunityAccountController.js","Scripts/Controllers/Catalog/Import/searchMatchItemController.js"],
+                        dest: 'Scripts/concatenated/controllers2-concat.js'
+                    },
+                app:
+                    {
+                        src: ["Scripts/app.js"],
+                        dest: 'Scripts/concatenated/app.js'
+                    },
+                services:
+                    {
+                        src: ["Scripts/commonService.js", "Scripts/Services/*.js"],
+                        dest: 'Scripts/concatenated/services-concat.js',
+                    },
+                others:
+                    {
+                        src: ["Scripts/app.directives.js", "Scripts/dragdrop.js", "Scripts/app.services.js", "Scripts/app.themes.js", "Scripts/routing.js", "Scripts/app.constants.js", "Scripts/app.izenda.js"],
+                        dest: 'Scripts/concatenated/app-others-concat.js',
+                    }
+
+            },
+        uglify:
+            {
+                //options: {
+                //    sourceMap: true
+                //},
+                controllers:
+                    {
+                        src: ["Scripts/concatenated/controllers1-concat.js", "Scripts/concatenated/controllers2-concat.js"],
+                        dest: 'Scripts/minified/controllers-min.js'
+                    },
+                services:
+                    {
+                        src: ["Scripts/concatenated/services-concat.js"],
+                        dest: 'Scripts/minified/services-min.js'
+                    },
+                app:
+                    {
+                        src: ["Scripts/concatenated/app.js"],
+                        dest: 'Scripts/minified/app-min.js'
+                    },
+                others:
+                    {
+                        src: ["Scripts/concatenated/app-others-concat.js"],
+                        dest: 'Scripts/minified/app-others-min.js'
+                    }
+            },
+        cssmin:
+            {
+                site:
+                    {
+                        src: ["Assets/css/site.css"],
+                        dest: 'Assets/minified/site-min.css'
+                    }
+            },
+        cacheBust: {
+            taskName: {
+                options: {
+                    //baseDir: 'Scripts/public',
+                    assets: ['Scripts/minified/*', 'Assets/minified/*'],
+                    deleteOriginals: true
+                },
+                src: ['Views/Home/Index.html']
+            }
+        },
+        //cachebreaker: {
+        //    dev: {
+        //        options: {
+        //            match: ['Scripts/minified/app-min.js', 'Scripts/minified/services-min.js'],
+        //            position: 'filename',
+        //            //replacement: 'md5'
+        //        },
+        //        files: {
+        //            src: ['test.html']
+        //        }
+        //    }
+        //}
+
+    });
+
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify-es');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-cache-bust');
+    //grunt.loadNpmTasks('grunt-cache-breaker');
+
+    grunt.registerTask('start-minification', ["clean", "concat", "uglify", "cssmin", "cacheBust"]);
+    //grunt.registerTask('1-clean', ["clean"]);
+    //grunt.registerTask('2-concatenate', ["concat"]);
+    //grunt.registerTask('3-minifyjs', ["uglify"]);
+    //grunt.registerTask('4-minifycss', ["cssmin"]);
+    //grunt.registerTask('5-CacheBust', ["cacheBust"]);
+};

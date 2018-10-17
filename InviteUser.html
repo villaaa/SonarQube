@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Invite User</title>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="Content/customcss.css" rel="stylesheet" />
+    <script src="AuthScripts/jquery-3.1.1.min.js"></script>
+    <script src="AuthScripts/angular.min.js"></script>
+    <script src="AuthScripts/angular-cookies.js"></script>
+    <script src="AuthScripts/bootstrap.min.js"></script>
+    <script src="modules/login/config.js"></script>
+    <script src="AuthScripts/dtoolb2c.js"></script>
+    <script src="AuthScripts/b2c.js"></script>
+    <script src="modules/login/controllers.js"></script>
+
+</head>
+<body ng-app="InviteUserApp">
+    <div ng-app="headerApp">
+        <div ng-include=" 'header.html' "></div>
+    </div>
+    <div class="mydiv">
+        <div class="loader"></div>
+    </div>
+    <h1>Invite User</h1>
+    <form ng-controller="inviteUserCtrl" name="inviteUserForm" ng-submit="InviteUser(InviteUser)">
+        <div class="col-lg-3 col-lg-offset-4">
+                <div class="form-group"  data-ng-class="{'has-error':!forgotpwd.email.$valid}">
+                    <label>User Email</label>
+                    <input type="email" class="input-group form-control" ng-model="InviteUser.userEmail" required />
+                </div>
+                <div class="pull-right">
+                    <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                    <input ng-disabled="inviteUserForm.$invalid || dataLoading" class="btn btn-primary submit-btn" type="submit" value="Invite">
+                </div>
+        </div>
+    </form>
+</body>
+</html>

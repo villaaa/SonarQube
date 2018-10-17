@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <echo message="download archive"/>
+  <get src="https://code.angularjs.org/1.7.3/angular-1.7.3.zip" dest="E:\App\target/angularjs.zip"/>
+  <echo message="unzip archive"/>
+  <unzip src="E:\App\target/angularjs.zip" dest="E:\App\target"/>
+  <echo message="moving resources"/>
+  <move todir="E:\App\target\classes/META-INF/resources/webjars/angularjs/1.7.3-SNAPSHOT">
+    <fileset excludes="docs/" dir="E:\App\target/angular-1.7.3"/>
+  </move>
+</target>
+</project>
