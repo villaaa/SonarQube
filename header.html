@@ -1,0 +1,599 @@
+﻿<div ng-controller="headerCtrl" style="display:none">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">D-Tools</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" ng-hide="isLogin" class="sign-in"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                    <a href="#" ng-show="isLogin" class="sign-in-logout"><span class="glyphicon glyphicon-log-in "></span> Logout</a>
+                </li>
+                <li><a href="#" ng-hide="isLogin" class="sign-up-sign-in"><span class="glyphicon glyphicon-user"></span> Setup</a></li>
+            </ul>
+            <div class="nav navbar-nav navbar-right">
+                <a href="home" ng-show="isLogin" class="navbar-brand"> {{ userEmail }}</a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Account List</h4>
+            </div>
+            <div class="modal-body">
+                <p>Please select your account </p>
+                <select id="accountLst" size="5" style="width:100%"></select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnOk">OK</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--<div class="mydiv">
+    <div class="loader"></div>
+</div>-->
+
+<link href="Content/customcss.css" rel="stylesheet" />
+<script src="AuthScripts/bootbox.min.js"></script>
+<style>
+    .modal-open .modal {
+        display: block;
+        margin: auto;
+        vertical-align: middle;
+        position: absolute;
+        top: 40%;
+    }
+
+    .btn-primary {
+        background-color: #00b575 !important;
+        border: 1px solid #00b575 !important;
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,0.21);
+        color: #fff;
+        font-weight: 600;
+        background-image: none !important;
+    }
+
+        .btn-primary:hover, .btn-primary:active:hover, .btn-primary.active:hover, .open > .dropdown-toggle.btn-primary:hover, .btn-primary:active:focus, .btn-primary.active:focus, .open > .dropdown-toggle.btn-primary:focus, .btn-primary:active.focus, .btn-primary.active.focus, .open > .dropdown-toggle.btn-primary.focus {
+            background-color: rgba(24,190,131,0.8) !important;
+            border: 1px solid #00b575 !important;
+            background-image: none !important;
+        }
+</style>
+<script class="pre">
+    //debugger;
+    var applicationId = config.applicationId;
+
+    var scope = 'openid ' + applicationId;
+    var responseType = 'token id_token';
+    var redirectURI = config.urls.web + '/home.html';
+
+    var apiBaseURL = config.urls.api.registration;
+
+    var apiAccountURL = apiBaseURL + '/Accounts';
+    var apiUserSetupURL = apiBaseURL + '/Users/user';
+    var apiUserDetails = apiBaseURL + '/UserProfile/details';
+    var apiInviteUserURL = apiBaseURL + '/Users/invite/register';
+    //update the policy names with the exact name from the AD B2C policies blade
+    var policies = {
+        signInPolicy: "B2C_1_SigninSignup",
+        editProfilePolicy: "B2C_1_b2c_1_reset",
+        signInSignUpPolicy: "B2C_1_Signup",
+        InviteUserPolicy: "B2C_1_UserRegistration"
+    };
+
+    //initiate all policies
+    dtoolb2c.init({
+        adB2CSignIn: applicationId,
+        adB2CSignInSignUp: applicationId,
+        adB2CEditProfile: applicationId,
+        adB2CInviteUserPolicy: applicationId
+    }, {
+            redirect_uri: config.urls.web + '/home.html',
+            scope: 'openid ' + applicationId,
+            response_type: 'token id_token'
+        });
+</script>
+<script class="pre">
+    var loginDisplayType = {
+        PopUp: 'popup',
+        None: 'none',
+        Page: 'page' //default is popup, if we use page option, webpage gets redirected to b2c login page then to redirect html.
+
+    };
+
+    var dtoolb2cNetwork = {
+        adB2CSignIn: 'adB2CSignIn',
+        adB2CSignInSignUp: 'adB2CSignInSignUp',
+        adB2CEditProfile: 'adB2CEditProfile',
+        adB2CInviteUserPolicy: "adB2CInviteUserPolicy"
+    };
+
+    $(function () {
+        debugger;
+        var dtools = JSON.parse(localStorage.getItem('dtoolb2c'));
+        if (dtools && dtools.adB2CSignIn && dtools.adB2CSignIn.error && dtools.adB2CSignIn.error.code == "access_denied" && dtools.adB2CSignIn.error.message.match("AADB2C90118")) {
+            localStorage.setItem('dtoolb2c', null);
+            policyLogin(dtoolb2cNetwork.adB2CEditProfile, loginDisplayType.Page);
+            localStorage.setItem('isLogin', false);
+        }
+        else if ((dtools && dtools.adB2CSignIn && dtools.adB2CSignIn.error && dtools.adB2CSignIn.error.code == "access_denied" && dtools.adB2CSignIn.error.message.match("AADB2C90091"))
+            || (dtools && dtools.adB2CSignIn && dtools.adB2CSignIn.error && dtools.adB2CSignIn.error.code == "redirect_uri_mismatch" && dtools.adB2CSignIn.error.message.match("AADB2C90006"))) {
+            $('.mydiv').show();
+            policyLogin(dtoolb2cNetwork.adB2CSignIn, loginDisplayType.Page);
+            localStorage.setItem('dtoolb2c', null);
+        }
+        else if (dtools && dtools.adB2CEditProfile && dtools.adB2CEditProfile.error && dtools.adB2CEditProfile.error.code == "access_denied" && dtools.adB2CEditProfile.error.message.match("AADB2C90091")) {
+            $('.mydiv').show();
+            localStorage.setItem('dtoolb2c', null);
+            policyLogin(dtoolb2cNetwork.adB2CSignIn, loginDisplayType.Page);
+        }
+        else if (dtools && dtools.adB2CSignIn && dtools.adB2CSignIn.error == undefined && localStorage.getItem('isLogout') != 'true' && localStorage.getItem('currentUserSession') != 'null' && localStorage.isLogin == 'true') {
+            window.location.href = config.urls.web + '/Views/Home/Index.html';
+        }
+
+        bindSignInPolicyEventHandlers();
+        bindSignUpSignInPolicyEventHandlers();
+        bindEditProfilePolicyEventHandlers();
+        dtoolb2c.on('auth.login', function (auth) { log(auth); });
+
+        //Added by deva redirect to login page by default when user session is null
+        console.log(dtools);
+
+        if ((dtools == null || dtools == undefined || localStorage.getItem('dtoolb2c') == '{}') && !window.location.href.toString().match('Activation.html') && !window.location.href.toString().match('Registration.html') && (localStorage.getItem('isLogin') != null || localStorage.getItem('isLogin') != 'null' || localStorage.getItem('isLogin') == 'false')) {
+            $('.mydiv').show();
+            policyLogin(dtoolb2cNetwork.adB2CSignIn, loginDisplayType.Page);
+        }
+
+        if (localStorage.getItem('isLogout') == 'true') {
+            localStorage.setItem('isLogin', false);
+            localStorage.setItem('isInvited', false);
+            policyLogout(dtoolb2cNetwork.adB2CSignIn, policies.signInPolicy);
+        }
+    });
+
+    function bindSignInPolicyEventHandlers() {
+        /*
+        * SIGN-IN POLICY HANDLERS
+        */
+        $('.sign-in').on('click', function () {
+            $('.mydiv').show();
+            policyLogin(dtoolb2cNetwork.adB2CSignIn, loginDisplayType.Page);
+        });
+
+        $('.sign-in-logout').on('click', function () {
+            localStorage.setItem('isLogin', false);
+            localStorage.setItem('isInvited', false)
+            policyLogout(dtoolb2cNetwork.adB2CSignIn, policies.signInPolicy);
+        });
+    }
+
+    function bindSignUpSignInPolicyEventHandlers() {
+        /*
+         * SIGN-UP OR SIGN-IN POLICY HANDLERS
+         */
+        $('.sign-up-sign-in').on('click', function () {
+            policyLogin(dtoolb2cNetwork.adB2CSignInSignUp, loginDisplayType.Page);
+        });
+
+        $('.sign-up-sign-in-logout').on('click', function () {
+            policyLogout(dtoolb2cNetwork.adB2CSignInSignUp, policies.signInSignUpPolicy);
+        });
+    }
+
+    function bindEditProfilePolicyEventHandlers() {
+        /*
+         * Edit Profile POLICY HANDLERS
+         */
+        $('.edit-profile').on('click', function () {
+            policyLogin(dtoolb2cNetwork.adB2CEditProfile, loginDisplayType.Page);
+        });
+
+        $('.edit-profile-logout').on('click', function () {
+            policyLogout(dtoolb2cNetwork.adB2CEditProfile, policies.editProfilePolicy);
+        });
+    }
+
+    function online(session) {
+        var currentTime = (new Date()).getTime() / 1000;
+        return session && session.access_token && session.expires > currentTime;
+    };
+
+    function policyLogin(network, displayType) {
+        if (!displayType) {
+            displayType = 'page';
+        }
+
+        var b2cSession = dtoolb2c(network).getAuthResponse();
+        //in case of silent renew, check if the session is still active otherwise ask the user to login again
+        if (!online(b2cSession) && displayType == loginDisplayType.None) {
+            policyLogin(network, loginDisplayType.Page);
+            return;
+        }
+
+        dtoolb2c(network).login({ display: displayType }, log).then(function (auth) {
+        }, function (e) {
+            if ('Iframe was blocked' in e.error.message) {
+                policyLogin(network, loginDisplayType.Page);
+                return;
+            }
+            //bootbox.alert('Signin error: ' + e.error.message);
+        });
+
+    }
+
+    function policyLogout(network, policy) {
+        localStorage.setItem('isLogout', false);
+        localStorage.setItem('currentUserSession', null);
+        localStorage.setItem('showAccountList', false);
+        $('.mydiv').hide();
+        dtoolb2c.logout(network, { force: true }).then(function (auth) {
+            //bootbox.alert('policy: ' + policy + ' You are logging out from AD B2C');
+        }, function (e) {
+            //bootbox.alert('Logout error: ' + e.error.message);
+        });
+    }
+
+    /*API*/
+    var accounts;
+    function getUserDetails(network) {
+        //debugger;
+        $('.mydiv').show();
+        var authResponse = dtoolb2c(network).getAuthResponse();
+        if (authResponse != null) {
+            $.ajax({
+                url: apiBaseURL + '/Users/GetUser',
+                method: 'GET',
+                headers: {
+                    "Ocp-Apim-Subscription-Key": config.ocpApimSubscriptionKey,
+                    "content-type": 'application/x-www-form-urlencoded',
+                    "Authorization": authResponse.token_type + ' ' + authResponse.access_token
+                },
+                success: function (response) {
+                    handleUserDetail(response, network);
+                },
+                error: function (response) {
+                    if (response.status == 404) {
+                        UserSetupLogin(network);
+                    } else {
+                        policyLogout(dtoolb2cNetwork.adB2CSignIn, policies.signInPolicy);
+                        localStorage.setItem('currentUserSession', null);
+                        localStorage.setItem('isLogin', false);
+                        localStorage.setItem('isLogout', true);
+                        localStorage.setItem('history', null);
+                    }
+                }
+            });
+        }
+        else {
+            bootbox.alert("Please login");
+        }
+    }
+
+    function handleUserDetail(response, network) {
+        //debugger;
+        $('.mydiv').hide();
+        if (response.active) {
+            if (localStorage.getItem('currentUserSession') == "null" || localStorage.getItem('currentUserSession') == null || localStorage.getItem('currentUserSession') == undefined) {
+                var reponseObj = response;
+                GetAccounts(network, response.id);
+                if (accounts && accounts.length > 0) {
+                    var activeAccountsCount = 0;
+                    var pendingAccountsCount = 0;
+                    accounts.forEach(function (acc) {
+                        if (acc.invited) {
+                            pendingAccountsCount++;
+                        } else {
+                            activeAccountsCount++;
+                        }
+                    });
+                    if (activeAccountsCount == 1 && pendingAccountsCount == 0) {
+                        reponseObj.Accounts = accounts;
+                        config.accountId = accounts ? accounts.length > 0 ? accounts[0].id : null : null;
+                        localStorage.accountId = accounts ? accounts.length > 0 ? accounts[0].id : null : null;
+                        localStorage.accountName = accounts ? accounts.length > 0 ? accounts[0].name : null : null;
+                        localStorage.setItem('currentUserSession', JSON.stringify(reponseObj));
+                        localStorage.setItem('isLogin', true);
+                        localStorage.setItem('isLogout', false);
+                        window.location.href = config.urls.web + '/Views/Home/Index.html?' + (new Date().getTime());
+                    } else {
+                        reponseObj.Accounts = accounts;
+                        localStorage.setItem('currentUserSession', JSON.stringify(reponseObj));
+                        localStorage.setItem('isLogin', true);
+                        localStorage.setItem('isLogout', false);
+                        window.location.href = config.urls.web + '/registration.html?' + (new Date().getTime());
+                    }
+                } else {
+                    reponseObj.Accounts = null;
+                    config.accountId = null;
+                    localStorage.accountId = null;
+                    localStorage.dtToken = null;
+                    localStorage.accountName = null;
+                    localStorage.setItem('currentUserSession', JSON.stringify(reponseObj));
+                    localStorage.setItem('isLogin', true);
+                    localStorage.setItem('isLogout', false);
+                    window.location.href = config.urls.web + '/Views/Home/Index.html?' + (new Date().getTime()) + '&isNewUser=true';
+                }
+            }
+            else {
+                localStorage.setItem('isLogin', true);
+                localStorage.setItem('isLogout', false);
+                window.location.href = config.urls.web + '/Views/Home/Index.html?' + (new Date().getTime());
+            }
+
+            //localStorage.setItem('currentUserSession', JSON.stringify(response.ResponseMessage));
+
+        }
+        else {
+            //bootbox.alert("User is not active yet. Activation link has been sent in your email account. Please activate your account first.", function () {
+            policyLogout(dtoolb2cNetwork.adB2CSignIn, policies.signInPolicy);
+            //});
+            localStorage.setItem('currentUserSession', null);
+            localStorage.setItem('isLogin', false);
+            localStorage.setItem('isLogout', true);
+            localStorage.setItem('history', null);
+        }
+        logAPIResponse(response);
+    }
+
+    /*API*/
+    function postAccount(network) {
+        var authResponse = dtoolb2c(network).getAuthResponse();
+        if (authResponse != null) {
+            dtoolb2c(network).api({
+                path: apiAccountURL,// + "?Subscription-Key=5d65da72a706407cac8127021ca2055e",
+                method: 'POST',
+                async: true,
+                headers: {
+                    "Ocp-Apim-Subscription-Key": config.ocpApimSubscriptionKey,
+                    Authorization: authResponse.token_type + ' ' + authResponse.access_token,
+                    "content-type": 'application/x-www-form-urlencoded'
+                }
+            }).then(function (response) {
+                $('.mydiv').hide();
+                if (response.error) {
+                    bootbox.alert(response.error, function () {
+                        policyLogout(dtoolb2cNetwork.adB2CSignInSignUp, policies.adB2CSignInSignUp);
+                    });
+                }
+                else {
+                    bootbox.alert("Account created.", function () {
+                        policyLogout(dtoolb2cNetwork.adB2CSignInSignUp, policies.adB2CSignInSignUp);
+                    });
+                }
+            }, function (e) {
+                // logAPIResponse('API error: ' + e.error.message);
+            });
+        }
+        else {
+            bootbox.alert("Please login");
+        }
+    }
+
+    function UserSetup(network) {
+        //debugger;
+        var date = new Date();
+        var utcOffset = -date.getTimezoneOffset();
+        var authResponse = dtoolb2c(network).getAuthResponse();
+        if (authResponse != null) {
+            dtoolb2c(network).api({
+                path: apiBaseURL + '/Users/CreateUser?utcOffset=' + utcOffset,// + "?Subscription-Key=5d65da72a706407cac8127021ca2055e",
+                method: 'POST',
+                async: true,
+                headers: {
+                    "Ocp-Apim-Subscription-Key": config.ocpApimSubscriptionKey,
+                    Authorization: authResponse.token_type + ' ' + authResponse.access_token,
+                    "content-type": 'application/x-www-form-urlencoded'
+                }
+            }).then(function (response) {
+                $('.mydiv').hide();
+                //debugger;
+                if (response.error) {
+                    bootbox.alert(response.error, function () {
+                        policyLogout(dtoolb2cNetwork.adB2CSignInSignUp, policies.adB2CSignInSignUp);
+                    });
+                }
+                else {
+                    bootbox.alert("User registered successully", function () {//. Activation link has been sent in your email account please activate your account
+                        policyLogout(dtoolb2cNetwork.adB2CSignInSignUp, policies.adB2CSignInSignUp);
+                    });
+                }
+            }, function (e) {
+                // logAPIResponse('API error: ' + e.error.message);
+            });
+        }
+        else {
+            bootbox.alert("Please login");
+        }
+    }
+
+    function RegisterInviteUser(network) {
+        var authResponse = dtoolb2c(network).getAuthResponse();
+        if (authResponse != null) {
+            dtoolb2c(network).api({
+                path: apiInviteUserURL,// + "?Subscription-Key=5d65da72a706407cac8127021ca2055e",
+                method: 'POST',
+                async: true,
+                headers: {
+                    "Ocp-Apim-Subscription-Key": config.ocpApimSubscriptionKey,
+                    Authorization: authResponse.token_type + ' ' + authResponse.access_token,
+                    "content-type": 'application/x-www-form-urlencoded'
+                }
+            }).then(function (response) {
+                $('.mydiv').hide();
+                if (response.error) {
+                    bootbox.alert(response.error, function () {
+                        policyLogout(dtoolb2cNetwork.adB2CInviteUserPolicy, policies.InviteUserPolicy);
+                    });
+                }
+                else {
+                    bootbox.alert("User registered successully. Please Login..", function () {
+                        policyLogout(dtoolb2cNetwork.adB2CInviteUserPolicy, policies.InviteUserPolicy);
+                    });
+                }
+            }, function (e) {
+                // logAPIResponse('API error: ' + e.error.message);
+            });
+        }
+        else {
+            bootbox.alert("Please login");
+        }
+    }
+
+    function UserSetupLogin(network) {
+        //debugger;
+        var date = new Date();
+        var utcOffset = -date.getTimezoneOffset();
+        var authResponse = dtoolb2c(network).getAuthResponse();
+        if (authResponse != null) {
+            $.ajax({
+                url: apiBaseURL + '/Users/CreateUser?utcOffset=' + utcOffset,
+                method: 'POST',
+                async: false,
+                headers: {
+                    "Ocp-Apim-Subscription-Key": config.ocpApimSubscriptionKey,
+                    "content-type": 'application/x-www-form-urlencoded',
+                    "Authorization": authResponse.token_type + ' ' + authResponse.access_token
+                },
+                success: function (response) {
+                    handleUserDetail(response, network);
+                },
+                error: function (response) {
+                    policyLogout(dtoolb2cNetwork.adB2CSignIn, policies.signInPolicy);
+                }
+            });
+        }
+        else {
+            $('.mydiv').hide();
+            bootbox.alert("Please login");
+        }
+    }
+
+    function UserSetupLoginOld(network) {
+        //debugger;
+        var authResponse = dtoolb2c(network).getAuthResponse();
+        if (authResponse != null) {
+            dtoolb2c(network).api({
+                path: apiBaseURL + '/Users/CreateUser',// + "?Subscription-Key=5d65da72a706407cac8127021ca2055e",
+                method: 'POST',
+                async: true,
+                headers: {
+                    "Ocp-Apim-Subscription-Key": config.ocpApimSubscriptionKey,
+                    Authorization: authResponse.token_type + ' ' + authResponse.access_token,
+                    "content-type": 'application/x-www-form-urlencoded'
+                }
+            }).then(function (response) {
+                //debugger;
+                $('.mydiv').hide();
+                if (response.error) {
+                    bootbox.alert(response.error, function () {
+                        policyLogout(dtoolb2cNetwork.adB2CSignIn, policies.signInPolicy);
+                    });
+                }
+                else if (response.status == 500) {
+                    bootbox.alert(response.message, function () {
+                        policyLogout(dtoolb2cNetwork.adB2CSignIn, policies.signInPolicy);
+                    });
+                }
+                else {
+                    bootbox.alert("User registered successully. ", function () {//Activation link has been sent in your email account please activate your account
+                        policyLogout(dtoolb2cNetwork.adB2CSignIn, policies.signInPolicy);
+                    });
+                }
+            }, function (e) {
+                // logAPIResponse('API error: ' + e.error.message);
+            });
+        }
+        else {
+            $('.mydiv').hide();
+            bootbox.alert("Please login");
+        }
+    }
+
+    function GetAccounts(network, userId) {
+        //debugger;
+        var authResponse = dtoolb2c(network).getAuthResponse();
+        if (authResponse != null) {
+
+            $.ajax({
+                type: "GET",
+                url: apiBaseURL + '/Accounts/GetAccounts?userId=' + userId,
+                headers: {
+                    "Ocp-Apim-Subscription-Key": config.ocpApimSubscriptionKey,
+                    "content-type": 'application/x-www-form-urlencoded',
+                    "Authorization": authResponse.token_type + ' ' + authResponse.access_token
+                },
+                async: false,
+                success: function (response) {
+                    //debugger;
+                    accounts = response;
+                },
+                error: function (response) {
+                    if (response.status == 404) {
+                        accounts = null;
+                    }
+                    else if (response.status == 500 || response.status == 400) {
+                        bootbox.alert(response.message, function () {
+                            policyLogout(dtoolb2cNetwork.adB2CSignIn, policies.signInPolicy);
+                        });
+                    }
+                    accounts = null;
+                }
+            });
+        }
+        else {
+            $('.mydiv').hide();
+            bootbox.alert("Please login");
+        }
+    }
+
+
+</script>
+<script>
+    function log(s) {
+        // var userjson = JSON.parse(localStorage.getItem('currentUserSession'));
+        debugger;
+        var isLogin = localStorage.getItem('isLogin');
+        if (typeof s.error != 'undefined' && s.error != null) {
+            if (s.error.code == 'blocked') {   //silentrenew(display: none) in case of expired token returns X-frame Options as DENY error                
+                return;
+            }
+        }
+        else {
+            if (s['network'] == dtoolb2cNetwork.adB2CSignIn && isLogin != "true") {
+                $('.mydiv').show();
+                getUserDetails(dtoolb2cNetwork.adB2CSignIn);
+            }
+            else if (s['network'] == dtoolb2cNetwork.adB2CSignInSignUp && isLogin != "true") {
+                $('.mydiv').show();
+                UserSetup(dtoolb2cNetwork.adB2CSignInSignUp);
+            }
+            else if (s['network'] == dtoolb2cNetwork.adB2CInviteUserPolicy && isLogin != "true") {
+                $('.mydiv').show();
+                RegisterInviteUser(dtoolb2cNetwork.adB2CInviteUserPolicy);
+            }
+            else if (s['network'] == dtoolb2cNetwork.adB2CEditProfile) {
+                $('.mydiv').hide();
+                bootbox.alert('Your password has been reset. Please logout & login with new password', function () {
+                    policyLogout(dtoolb2cNetwork.adB2CEditProfile, policies.adB2CEditProfile);
+                    localStorage.setItem('isLogin', false);
+                });
+            }
+        }
+    }
+
+    function logAPIResponse(s) {
+        //$('.api-response').html(JSON.stringify(s, true, 2));
+    }
+</script>
+<!--END: ADScripts-->

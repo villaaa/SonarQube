@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign in</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- TODO: favicon -->
+
+    <link href="https://staging.d-tools.cloud/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://staging.d-tools.cloud/Content/global.css" rel="stylesheet" />
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js"></script>
+    <style>
+        .preload * {
+            -webkit-transition: none !important;
+            -moz-transition: none !important;
+            -ms-transition: none !important;
+            -o-transition: none !important;
+        }
+
+        .buttons button[disabled]#continue, .buttons button[disabled]:hover#continue {
+            background-color: rgba(255,194,7,1) !important;
+            background-image: none !important;
+            border-color: rgba(234,174,1,1) !important;
+            color: #fff !important;
+        }
+
+        .buttons button#continue {
+            background-color: rgba(255,194,7,1) !important;
+            border-bottom: 3px solid rgba(234,174,1,1) !important;
+            border-color: rgba(234,174,1,1) !important;
+            color: #fff !important;
+            /* font-size: 18px; */
+        }
+
+
+        .panel-body {
+            position: relative;
+        }
+        .verifying-modal {
+            display: none;
+        }
+    </style>
+</head>
+<body class="preload">
+    <div class="container unified_container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="login-header">
+                            <div class="image-center">
+                                <img src="https://dtclouddevapp.azurewebsites.net/Assets/images/Logo_horz_small.png" />
+                            </div>
+                            <div id="signUp-msg">Welcome to D-Tools Cloud!</div>
+                            <div class="row sign-up-steps">
+                                <div class="col-md-6 sign-up-step1">
+                                    <span class="label">1) Verify Email</span>
+                                    <span>Enter email, then enter verification code received in email.</span>
+                                </div><div class="col-md-6 sign-up-step2">
+                                    <span class="label">2) Enter Information</span>
+                                    <span>After email has been verified, create a password and enter your name</span>
+                                </div>
+                            </div>
+                            <span id="termsLink">By clicking Create User, you agree to our <a href="http://d-tools.com/cloud-terms-of-service/" target="_blank" class="helpLink tiny">Terms of Service</a></span>
+
+                        </div>
+                        <div id="api" data-name="Unified" style="padding:0px 30px 25px">
+                            <div class="social" role="form">
+                                <div class="intro">
+                                    <h2>Sign in with your social account</h2>
+                                </div>
+                                <div class="options">
+                                    <div><button class="accountButton firstButton" id="MicrosoftAccountExchange" tabindex="1">msa</button></div>
+                                    <div><button class="accountButton" id="FacebookExchange" tabindex="1">fb</button></div>
+                                </div>
+                            </div>
+                            <div class="divider">
+                                <h2>OR</h2>
+                            </div>
+                            <div class="localAccount" role="form">
+                                <div class="intro">
+                                    <h2>Sign in with your existing account</h2>
+                                </div>
+                                <div class="error pageLevel" aria-hidden="true" style="display: none;">
+                                    <p role="alert"></p>
+                                </div>
+                                <div class="entry">
+                                    <div class="entry-item">
+                                        <label for="logonIdentifier">Email Address</label>
+                                        <div class="error itemLevel" aria-hidden="true" style="display: none;">
+                                            <p role="alert"></p>
+                                        </div>
+                                        <input type="email" id="logonIdentifier" name="LogonIdentifier" pattern="^[a-zA-Z0-9.!#$%&amp;’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" placeholder="LogonIdentifier" value="" tabindex="1" autocomplete="off">
+                                    </div>
+                                    <div class="entry-item">
+                                        <div class="password-label">
+                                            <label for="password">Password</label>
+                                        </div>
+                                        <div class="error itemLevel" aria-hidden="true" style="display: none;">
+                                            <p role="alert"></p>
+                                        </div>
+                                        <input type="password" id="password" name="Password" placeholder="Password" tabindex="1" autocomplete="off" style="margin-bottom:5px;">
+                                        <a id="forgotPassword" tabindex="2">Forgot your password?</a>
+                                    </div>
+                                    <div class="working"></div>
+                                    <div class="buttons"> <button id="Signin" tabindex="1">Sign in</button> </div>
+                                </div>
+                                <div class="divider">
+                                    <h2>OR</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    $(window).load(function () {
+        $("body").removeClass("preload");
+    });
+</script>

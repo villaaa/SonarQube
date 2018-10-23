@@ -1,0 +1,45 @@
+﻿{
+  "hostingEnvironment": 2,
+  "ocpApimSubscriptionKey": null,
+  "applicationId": "1459c901-6932-4ae8-b87e-5cbd496bfdb2",
+  "tenantName": "DToolsStagingAD.onmicrosoft.com",
+  "urls": {
+    "web": "https://staging.d-tools.cloud",
+    "redirect": "https://staging.d-tools.cloud/home.html",
+    "api": {
+      "dashboardAPI": "https://dtcatalogprodapi-satging.azurewebsites.net/api/v1",
+      "registration": "https://dtregistrationprodapi-staging.azurewebsites.net/api/v1",
+      "catalog": "https://dtcatalogprodapi-satging.azurewebsites.net/api/v1",
+      "opportunity": "https://dtopportunityprodapi-staging.azurewebsites.net/api/v1",
+      "project": "https://dtprojectprodapi-staging.azurewebsites.net/api/v1",
+      "accounting": "https://dtaccountingprodapi-staging.azurewebsites.net/api/v1",
+      "ordering": "https://dtorderprodapi-staging.azurewebsites.net/api/v1",
+      "library": "https://dtlibraryprodapi-staging.azurewebsites.net/api/v1",
+      "notification": "https://dtnotificationandtaskprodapi-staging.azurewebsites.net/api/v1",
+      "search": "https://dttenantsearchprodapi-staging.azurewebsites.net/internal/api/v1",
+      "izendaTokenUrl": "https://izendaauthapi-staging.azurewebsites.net/internal/api/v1/Izenda/User/GenerateToken",
+      "izendaAPI": "https://dtizendaintegratedapi-staging.azurewebsites.net/api/",
+      "izendaRefreshAPI": "https://dtbisyncfunctionstaging.azurewebsites.net/api/SyncTenantData?code=snamCndqxcztgIsUqa2Ui2WwMrDjd8MDUCl5KrH0YwsoFlGVVmUnzg==",
+      "migrationAPI": "https://dtsiupload.azurewebsites.net/internal/api/v1",
+      "importAPI": "https://stagingapi.d-tools.cloud/Import/internal/api/v1"
+
+    }
+  },
+  "environments": {
+    "production": 1,
+    "staging": 2,
+    "development": 3,
+    "local": 4
+  },
+  "dashboards": {
+    "SalesOverview": "4916d484-f2de-4d85-9047-bafff3d4375b",
+    "MixMargin": "14ab240b-f379-4de8-bf78-39048770438b",
+    "SalesSummary": "cb3b9b24-53b5-4db0-a59b-48f7d9d5d91c"
+  },
+  "showMigration": "false",
+  "showIzenda": "true",
+  "showPlanView": "false",
+  "showImport": "false",
+  "showSnb": "true",
+  "showOrdering": "false"
+}

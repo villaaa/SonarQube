@@ -1,0 +1,44 @@
+﻿{
+  "hostingEnvironment": 4,
+  "ocpApimSubscriptionKey": null,
+  "applicationId": "8d9cc925-e07c-4bd9-9a99-ea871d4836b3",
+  "tenantName": "DTCloudDevAD.onmicrosoft.com",
+  "urls": {
+    "web": "http://localhost:50322",
+    "redirect": "http://localhost:50322/home.html",
+    "api": {
+      "registration": "http://localhost:53906/api/v1",
+      "catalog": "http://localhost:54692/api/v1",
+      "opportunity": "http://localhost:53249/api/v1",
+      "project": "http://localhost:60380/api/v1",
+      "accounting": "http://localhost:54006/api/v1",
+      "ordering": "http://localhost:58079/api/v1",
+      "library": "http://localhost:58053/api/v1",
+      "search": "https://dtoolstenantsearchapi.azurewebsites.net/internal/api/v1",
+      "notification": "http://localhost:59195/api/v1",
+      "izendaTokenUrl": "https://dtcloudizendaauthapi.azurewebsites.net/internal/api/v1/Izenda/User/GenerateToken",
+      "izendaAPI": "https://dtcloudizendaintegrationapi.azurewebsites.net/api/",
+      "dashboardAPI": "https://dtclouddevcatalogapi.azurewebsites.net/api/v1",
+      "izendaRefreshAPI": "https://dtdfpipelinefunctionapp.azurewebsites.net/api/CreateRunForPipeline?code=zQi/5R5NKFMCRIaHeiSVzybBRCFfy4/LagN9ny21wU/o/1Ymv4ArDg==",
+      "migrationAPI": "https://dtsiupload.azurewebsites.net/internal/api/v1",
+      "importAPI": "https://localhost:44398/internal/api/v1"
+    }
+  },
+  "environments": {
+    "production": 1,
+    "staging": 2,
+    "development": 3,
+    "local": 4
+  },
+  "dashboards": {
+    "SalesOverview": "4916d484-f2de-4d85-9047-bafff3d4375b",
+    "MixMargin": "14ab240b-f379-4de8-bf78-39048770438b",
+    "SalesSummary": "cb3b9b24-53b5-4db0-a59b-48f7d9d5d91c"
+  },
+  "showMigration": "false",
+  "showIzenda": "false",
+  "showPlanView": "false",
+  "showImport": "true",
+  "showSnb": "true",
+  "showOrdering": "true"
+}

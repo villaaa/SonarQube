@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script>
+        $.ajaxSetup({
+            async: false
+        });
+        var config = {};
+        $.getJSON("config.json", function (data) {
+            config = data;
+            $.ajaxSetup({
+                async: true
+            });
+        });
+      
+    </script>
+</head>
+<body>
+    <script>
+        if (config.hostingEnvironment == config.environments.production) {
+            //intercom start
+            (function () {
+                var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', intercomSettings); } else {
+                    var d = document; var i = function () { i.c(arguments) }; i.q = []; i.c = function (args) { i.q.push(args) }; w.Intercom = i; function l() {
+                        var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/xh224f41'; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+                    } if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); }
+                }
+            })()
+        }
+                //intercom end
+        //debugger;
+        if (window.location.hash) {
+            if (config.hostingEnvironment == config.environments.production) {
+                Intercom('shutdown');
+            }
+            localStorage.setItem('isLogout', true);
+            localStorage.setItem('history', null);
+            localStorage.setItem('currentUserSession', null);
+            localStorage.setItem('isLogin', false);
+            localStorage.setItem('isInvited', false);
+            config.accountId = null;
+            localStorage.accountId = null;
+            localStorage.dtToken = null;
+            localStorage.accountName = null;
+            var dtools = JSON.parse(localStorage.getItem('dtoolb2c'));
+            localStorage.setItem('dtoolb2c', null);
+            //redirecting to Azure B2C logout URI
+            if (dtools && dtools.adB2CSignIn) {
+                window.location = "https://login.microsoftonline.com/" + config.tenantName + "/oauth2/v2.0/logout?p=B2C_1_SigninSignup&id_token_hint=" +
+                    dtools.adB2CSignIn.id_token + "&post_logout_redirect_uri=" + config.urls.redirect;
+            }
+            else {
+                window.location.href = config.urls.redirect;
+            }
+        }
+        else {
+            window.location.href = config.urls.redirect;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>D-Tools</title>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="Content/customcss.css" rel="stylesheet" />
+    <style>
+        /* Center the loader */
+        #cloader {
+            position: absolute;
+            left: 50%;
+            top: 40%;
+            z-index: 1;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Add animation to "page content" */
+        .animate-bottom {
+            position: relative;
+            -webkit-animation-name: animatebottom;
+            -webkit-animation-duration: 1s;
+            animation-name: animatebottom;
+            animation-duration: 1s
+        }
+
+        @-webkit-keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+
+            to {
+                bottom: 0px;
+                opacity: 1
+            }
+        }
+
+        @keyframes animatebottom {
+            from {
+                bottom: -100px;
+                opacity: 0
+            }
+
+            to {
+                bottom: 0;
+                opacity: 1
+            }
+        }
+
+        @keyframes travel {
+            from {
+                left: -4px;
+            }
+
+            to {
+                left: 30px;
+            }
+        }
+
+        @keyframes spin {
+            from {
+                -moz-transform: rotate(0);
+                -o-transform: rotate(0);
+                -ms-transform: rotate(0);
+                transform: rotate(0);
+            }
+
+            to {
+                -moz-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        .get-progressor-container {
+            background-color: inherit;
+            height: auto;
+            padding: 0px;
+            margin: 0 auto;
+            padding: 35px 0 !important;
+        }
+
+        .loader_path {
+            position: relative;
+            margin: 10px auto;
+            width: 40px;
+            height: 10px;
+            border-radius: 10px;
+            background: #EAECED;
+        }
+
+        .loader_traveler {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            -webkit-animation-name: travel;
+            -webkit-animation-timing-function: linear;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-direction: alternate;
+            -webkit-animation-duration: .35s;
+            animation-name: travel;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            animation-duration: .45s;
+        }
+
+        .spiner {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            background: #7E8A96;
+            -webkit-animation-name: spin;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-duration: .18s;
+            animation-name: spin;
+            animation-iteration-count: infinite;
+            animation-duration: .18s;
+        }
+        .progresser-text {
+            font-weight: 500;
+            color: #7E8A96;
+            text-align: center;
+        }
+    </style>
+
+    <script src="AuthScripts/jquery-3.1.1.js"></script>
+    <script>
+        $.ajaxSetup({
+            async: false
+        });
+        var config = {};
+        $.getJSON("config.json", function (data) {
+            config = data;
+            $.ajaxSetup({
+                async: true
+            });
+        });
+    </script>
+    <script src="AuthScripts/angular.min.js"></script>
+    <script src="AuthScripts/angular-cookies.js"></script>
+    <script src="AuthScripts/bootstrap.min.js"></script>
+    <!--<script src="modules/login/config.js"></script>-->
+    <script src="AuthScripts/dtoolb2c.js"></script>
+    <script src="AuthScripts/b2c.js"></script>
+    <script src="modules/login/controllers.js"></script>
+
+</head>
+<body ng-app="HomeApp" ng-controller="homeCtrl" style="background-color: rgb(250,250,250);">
+    <div ng-app="headerApp" style="display:none">
+        <div ng-include=" 'header.html' "></div>
+    </div>
+
+    <form action="" method="get">
+        <!-- Get Loading -->
+        <div id="cloader" layout-fill layot="column" layout-align="center center" class="get-progressor-container">
+            <div class="loader_path gray">
+                <span class="loader_traveler"><span class="spiner"></span></span>
+            </div>
+            <span class="progresser-text">Loading...</span>
+        </div>
+
+        <!--<div id="cloader"></div>-->
+    </form>
+</body>
+</html>
+

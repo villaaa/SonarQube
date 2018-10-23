@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>User Login</title>
+    <script src="AuthScripts/dtoolb2c.js"></script>
+    <script src="AuthScripts/b2c.js"></script>
+    <script src="AuthScripts/jquery-3.1.1.min.js"></script>
+
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/bootstrap-theme.css" rel="stylesheet" />
+    <script src="AuthScripts/angular.min.js"></script>
+    <script src="AuthScripts/angular-cookies.js"></script>
+    <script src="modules/login/controllers.js"></script>
+
+    <script src="AuthScripts/bootstrap.min.js"></script>
+    <script src="modules/login/config.js"></script>
+</head>
+<body ng-app="LoginApp">
+    <div ng-app="headerApp">
+        <div ng-include=" 'header.html' "></div>
+    </div>
+    <h1>User Login</h1>
+    <form ng-controller="loginCtrl" name="LoginForm" ng-submit="UserLogin(Login)">
+        <div class="col-lg-3 col-lg-offset-4">
+            <div class="row">
+                <div class="form-group">
+                    <label>User Name</label>
+                    <input type="text" placeholder="Enter UserName" class="input-group form-control" ng-model="Login.UserName" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" placeholder="Enter Password" class="input-group form-control" ng-model="Login.Password" required>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-8"><input type="checkbox"> Remember me ?</div>
+                    <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+
+                    <input ng-disabled="LoginForm.$invalid || dataLoading" class="btn btn-primary submit-btn pull-right" type="submit" value="Submit">
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="text-center"><a href="forgotpassword.html">Forgot password click here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
