@@ -43,7 +43,7 @@ pipeline {
                     body: "Something is wrong with ${env.BUILD_URL}"
           }
           success {
-               mail to: 'nvamsi.krishna@trantorinc.com',
+               mail to: 'vamsi.krishna@trantorinc.com',
                     subject: "The pipeline ${currentBuild.fullDisplayName} completed successfully.",
                     body: "The pipeline ${currentBuild.fullDisplayName} completed successfully."
           }
